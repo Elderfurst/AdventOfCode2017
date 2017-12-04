@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 
 namespace AdventOfCode2017
 {
@@ -14,30 +15,17 @@ namespace AdventOfCode2017
 
         private void PartOne()
         {
-            var total = 0;
+            var total = _input.Where((t, i) => int.Parse(t.ToString()) == int.Parse(_input[(i + 1) % _input.Length].ToString())).Sum(t => int.Parse(t.ToString()));
 
-            for (var i = 0; i < _input.Length; i++)
-            {
-                if (int.Parse(_input[i].ToString()) == int.Parse(_input[(i + 1) % _input.Length].ToString()))
-                {
-                    total += int.Parse(_input[i].ToString());
-                }
-            }
             Console.WriteLine(total);
         }
 
         private void PartTwo()
         {
-            var total = 0;
             var half = _input.Length / 2;
             var full = _input.Length;
-            for (var i = 0; i < _input.Length; i++)
-            {
-                if (int.Parse(_input[i].ToString()) == int.Parse(_input[(i + half) % full].ToString()))
-                {
-                    total += int.Parse(_input[i].ToString());
-                }
-            }
+
+            var total = _input.Where((t, i) => int.Parse(t.ToString()) == int.Parse(_input[(i + half) % full].ToString())).Sum(t => int.Parse(t.ToString()));
 
             Console.WriteLine(total);
         }
