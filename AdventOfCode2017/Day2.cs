@@ -6,7 +6,7 @@ namespace AdventOfCode2017
 {
     public class Day2
     {
-        private readonly string[] _input = File.ReadAllText(@"Input/Day2.txt").Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
+        private readonly string[] _input = File.ReadAllLines(@"Input/Day2.txt");
         public void Run()
         {
             PartOne();
