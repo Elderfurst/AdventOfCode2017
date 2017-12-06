@@ -8,11 +8,11 @@ namespace AdventOfCode2017
     {
         public void Run()
         {
-            PartOne();
-            PartTwo();
+            var currentStatus = PartOne();
+            PartTwo(currentStatus);
         }
 
-        private void PartOne()
+        private static int[] PartOne()
         {
             var pastStates = new List<string>();
             var steps = 0;
@@ -33,16 +33,11 @@ namespace AdventOfCode2017
                 steps++;
             }
             Console.WriteLine(steps);
+            return banks;
         }
 
-        private void PartTwo()
+        private static void PartTwo(int[] banks)
         {
-            var pastStates = new List<string>();
-            //This is the end result of banks from PartOne
-            var banks = new int[]
-            {
-                1, 0, 14, 14, 12, 11, 10, 9, 9, 7, 5, 5, 4, 3, 7, 1
-            };
             var solution = string.Join(",", banks.Select(x => x.ToString()));
             var steps = 0;
             do
