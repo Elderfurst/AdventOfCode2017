@@ -64,8 +64,6 @@ namespace AdventOfCode2017
         private void PartTwo()
         {
             int[,] _spiral = new int[(int)Math.Sqrt(_input) + 2, (int)Math.Sqrt(_input) + 2];
-            int _row = 0;
-            int _column = 0;
             var direction = "right";
             var row = _spiral.GetLength(0) / 2;
             var column = _spiral.GetLength(1) / 2;
