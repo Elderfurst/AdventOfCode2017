@@ -24,7 +24,6 @@ namespace AdventOfCode2017
             {
                 numbers[i] = i;
             }
-
             foreach (var length in _input)
             {
                 var tempString = "";
@@ -76,7 +75,7 @@ namespace AdventOfCode2017
             {
                 solution[i / 16] = numbers[i] ^ numbers[i + 1] ^ numbers[i + 2] ^ numbers[i + 3] ^ numbers[i + 4] ^ numbers[i + 5] ^ numbers[i + 6] ^ numbers[i + 7] ^ numbers[i + 8] ^ numbers[i + 9] ^ numbers[i + 10] ^ numbers[i + 11] ^ numbers[i + 12] ^ numbers[i + 13] ^ numbers[i + 14] ^ numbers[i + 15];
             }
-            Console.WriteLine(String.Join("", solution.Select(x => x.ToString("x")).ToArray()));
+            Console.WriteLine(string.Join("", solution.Select(x => x.ToString("x")).ToArray()));
         }
     }
 }

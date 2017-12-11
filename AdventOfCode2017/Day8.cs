@@ -93,7 +93,7 @@ namespace AdventOfCode2017
 
         public override bool Equals(object obj)
         {
-            return obj.GetType() == typeof(Register) && ((Register)obj).Name == Name;
+            return obj != null && (obj.GetType() == typeof(Register) && ((Register)obj).Name == Name);
         }
 
         public override int GetHashCode()

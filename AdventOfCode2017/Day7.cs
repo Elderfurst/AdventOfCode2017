@@ -56,11 +56,11 @@ namespace AdventOfCode2017
 
     public class Disc
     {
-        public int Weight { get; private set; }
-        public string Name { get; private set; }
-        public List<string> ChildNames { get; private set; }
-        public List<Disc> ChildDiscs { get; private set; }
-        public Disc Parent { get; private set; }
+        public int Weight;
+        public string Name;
+        public List<string> ChildNames;
+        public List<Disc> ChildDiscs;
+        public Disc Parent;
 
         public Disc(string input)
         {

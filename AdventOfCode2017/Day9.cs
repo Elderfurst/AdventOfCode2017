@@ -17,29 +17,30 @@ namespace AdventOfCode2017
             var depth = 0;
             var garbageCount = 0;
             var garbage = false;
-            char letter;
 
             for(var i = 0; i < _input.Length; i++)
             {
-                letter = _input[i];
+                var letter = _input[i];
                 if(letter == '!')
                 {
                     i++;
                 }
                 else
                 {
-                    if(letter == '{' && !garbage)
+                    switch (letter)
                     {
-                        depth++;
-                        score += depth;
-                    }
-                    if(letter == '}' && !garbage)
-                    {
-                        depth--;
-                    }
-                    if (letter == '>')
-                    {
-                        garbage = false;
+                        case '{' when !garbage:
+                            depth++;
+                            score += depth;
+                            break;
+                        case '}' when !garbage:
+                            depth--;
+                            break;
+                        case '>':
+                            garbage = false;
+                            break;
+                        default:
+                            break;
                     }
                     if (garbage)
                     {

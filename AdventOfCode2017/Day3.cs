@@ -4,8 +4,8 @@ namespace AdventOfCode2017
 {
     public class Day3
     {
-        private static readonly int _input = 289326;
-        //private static readonly int _input = 25;
+        private const int Input = 289326;
+        //private const int Input = 25;
 
         public void Run()
         {
@@ -13,97 +13,97 @@ namespace AdventOfCode2017
             PartTwo();
         }
 
-        private void PartOne()
+        private static void PartOne()
         {
-            int[,] _spiral = new int[(int)Math.Sqrt(_input) + 2, (int)Math.Sqrt(_input) + 2];
-            int _row = 0;
-            int _column = 0;
+            var spiral = new int[(int)Math.Sqrt(Input) + 2, (int)Math.Sqrt(Input) + 2];
             var direction = "right";
-            var row = _spiral.GetLength(0) / 2;
-            var column = _spiral.GetLength(1) / 2;
-            _spiral[row, column] = 1;
-            for (var i = 2; i <= _input; i++)
+            var row = spiral.GetLength(0) / 2;
+            var column = spiral.GetLength(1) / 2;
+            spiral[row, column] = 1;
+            for (var i = 2; i <= Input; i++)
             {
-                if (direction == "right")
+                switch (direction)
                 {
-                    column += 1;
+                    case "right":
+                        column += 1;
+                        break;
+                    case "left":
+                        column -= 1;
+                        break;
+                    case "up":
+                        row -= 1;
+                        break;
+                    case "down":
+                        row += 1;
+                        break;
+                    default:
+                        break;
                 }
-                else if (direction == "left")
-                {
-                    column -= 1;
-                }
-                else if (direction == "up")
-                {
-                    row -= 1;
-                }
-                else if (direction == "down")
-                {
-                    row += 1;
-                }
-                _spiral[row, column] = i;
-                if (direction == "right" && _spiral[row - 1, column] == 0)
+                spiral[row, column] = i;
+                if (direction == "right" && spiral[row - 1, column] == 0)
                 {
                     direction = "up";
                 }
-                else if (direction == "left" && _spiral[row + 1, column] == 0)
+                else if (direction == "left" && spiral[row + 1, column] == 0)
                 {
                     direction = "down";
                 }
-                else if (direction == "up" && _spiral[row, column - 1] == 0)
+                else if (direction == "up" && spiral[row, column - 1] == 0)
                 {
                     direction = "left";
                 }
-                else if (direction == "down" && _spiral[row, column + 1] == 0)
+                else if (direction == "down" && spiral[row, column + 1] == 0)
                 {
                     direction = "right";
                 }
             }
-            Console.WriteLine(Math.Abs(_row - _spiral.GetLength(0) / 2) + Math.Abs(_column - _spiral.GetLength(1) / 2));
+            Console.WriteLine(Math.Abs(spiral.GetLength(0) / 2 - row) + Math.Abs(spiral.GetLength(1) / 2 - column));
         }
 
-        private void PartTwo()
+        private static void PartTwo()
         {
-            int[,] _spiral = new int[(int)Math.Sqrt(_input) + 2, (int)Math.Sqrt(_input) + 2];
+            var spiral = new int[(int)Math.Sqrt(Input) + 2, (int)Math.Sqrt(Input) + 2];
             var direction = "right";
-            var row = _spiral.GetLength(0) / 2;
-            var column = _spiral.GetLength(1) / 2;
-            _spiral[row, column] = 1;
+            var row = spiral.GetLength(0) / 2;
+            var column = spiral.GetLength(1) / 2;
+            spiral[row, column] = 1;
             var current = 2;
-            while(current <= _input)
+            while(current <= Input)
             {
-                if (direction == "right")
+                switch (direction)
                 {
-                    column += 1;
+                    case "right":
+                        column += 1;
+                        break;
+                    case "left":
+                        column -= 1;
+                        break;
+                    case "up":
+                        row -= 1;
+                        break;
+                    case "down":
+                        row += 1;
+                        break;
+                    default:
+                        break;
                 }
-                else if (direction == "left")
-                {
-                    column -= 1;
-                }
-                else if (direction == "up")
-                {
-                    row -= 1;
-                }
-                else if (direction == "down")
-                {
-                    row += 1;
-                }
-                current = _spiral[row - 1, column + 1] + _spiral[row - 1, column] + _spiral[row - 1, column - 1] +
-                          _spiral[row, column - 1] + _spiral[row, column + 1] + _spiral[row + 1, column - 1] +
-                          _spiral[row + 1, column] + _spiral[row + 1, column + 1];
-                _spiral[row, column] = current;
-                if (direction == "right" && _spiral[row - 1, column] == 0)
+                current = spiral[row - 1, column + 1] + spiral[row - 1, column] + spiral[row - 1, column - 1] +
+                          spiral[row, column - 1] + spiral[row, column + 1] + spiral[row + 1, column - 1] +
+                          spiral[row + 1, column] + spiral[row + 1, column + 1];
+                spiral[row, column] = current;
+                if (direction == "right" && spiral[row - 1, column] == 0)
                 {
                     direction = "up";
                 }
-                else if (direction == "left" && _spiral[row + 1, column] == 0)
+                else if (direction == "left" && spiral[row + 1, column] == 0)
                 {
                     direction = "down";
                 }
-                else if (direction == "up" && _spiral[row, column - 1] == 0)
+                else if (direction == "up" && spiral[row, column - 1] == 0)
                 {
                     direction = "left";
                 }
-                else if (direction == "down" && _spiral[row, column + 1] == 0)
+                else if (direction == "down" && spiral[row, column + 1] == 0)
                 {
                     direction = "right";
                 }
