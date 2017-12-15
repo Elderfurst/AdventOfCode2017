@@ -1,19 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace AdventOfCode2017
 {
     public class Day14
     {
-        //private const string Input = "amgozmfv";
-        private const string Input = "flqrgnkx";
+        private const string Input = "amgozmfv";
 
         public void Run()
         {
-            //PartOne();
+            PartOne();
             PartTwo();
         }
 
@@ -36,86 +33,147 @@ namespace AdventOfCode2017
                 grid[i] = KnotHash(Input + "-" + i).Select(x => x == 1 ? -1 : 0).ToArray();
             }
 
-            var currentRegion = 1;
+            var currentRegion = 0;
             for (var i = 0; i < grid.GetLength(0); i++)
             {
                 for (var j = 0; j < grid[i].Length; j++)
                 {
                     if (grid[i][j] == -1)
                     {
-                        var friends = new List<int>();
-                        if (i == 0 && j == 0)
-                        {
-                            friends.Add(grid[i][j + 1]);
-                            friends.Add(grid[i + 1][j]);
-                        }
-                        else if (i == 0 && j == grid[i].Length - 1)
-                        {
-                            friends.Add(grid[i + 1][j]);
-                            friends.Add(grid[i][j - 1]);
-                        }
-                        else if (i == 0 && j != 0)
-                        {
-                            friends.Add(grid[i][j + 1]);
-                            friends.Add(grid[i + 1][j]);
-                            friends.Add(grid[i][j - 1]);
-                        }
-                        else if (i == grid.GetLength(0) - 1 && j == 0)
-                        {
-                            friends.Add(grid[i - 1][j]);
-                            friends.Add(grid[i][j + 1]);
-                        }
-                        else if (i != 0 && j == 0)
-                        {
-                            friends.Add(grid[i - 1][j]);
-                            friends.Add(grid[i][j + 1]);
-                            friends.Add(grid[i + 1][j]);
-                        }
-                        else if (i == grid.GetLength(0) - 1 && j == grid[i].Length - 1)
-                        {
-                            friends.Add(grid[i][j - 1]);
-                            friends.Add(grid[i - 1][j]);
-                        }
-                        else if (i != 0 && j == grid[i].Length - 1)
-                        {
-                            friends.Add(grid[i - 1][j]);
-                            friends.Add(grid[i][j - 1]);
-                            friends.Add(grid[i + 1][j]);
-                        }
-                        else if (i == grid.GetLength(0) - 1 && j != 0)
-                        {
-                            friends.Add(grid[i][j - 1]);
-                            friends.Add(grid[i - 1][j]);
-                            friends.Add(grid[i][j + 1]);
-                        }
-                        else
-                        {
-                            friends.Add(grid[i - 1][j]);
-                            friends.Add(grid[i][j - 1]);
-                            friends.Add(grid[i][j + 1]);
-                            friends.Add(grid[i + 1][j]);
-                        }
-                        if (friends.Any(x => x > 0))
-                        {
-                            grid[i][j] = friends.First(x => x > 0);
-                        }
-                        else
-                        {
-                            grid[i][j] = currentRegion;
-                            currentRegion++;
-                        }
+                        currentRegion++;
+                        CreateRegion(ref grid, i, j, currentRegion);
                     }
                 }
             }
-            for (var i = 0; i < grid.GetLength(0); i++)
-            {
-                for (var j = 0; j < grid[i].Length; j++)
-                {
-                    Console.Write(grid[i][j]);
-                }
-                Console.WriteLine();
-            }
             Console.WriteLine(currentRegion);
+        }
+
+        private void CreateRegion(ref int[][] grid, int i, int j, int currentRegion)
+        {
+            grid[i][j] = currentRegion;
+            if (i == 0 && j == 0)
+            {
+                if (grid[i][j + 1] == -1)
+                {
+                    CreateRegion(ref grid, i, j + 1, currentRegion);
+                }
+                if (grid[i + 1][j] == -1)
+                {
+                    CreateRegion(ref grid, i + 1, j, currentRegion);
+                }
+            }
+            else if (i == 0 && j == grid[i].Length - 1)
+            {
+                if(grid[i + 1][j] == -1)
+                {
+                    CreateRegion(ref grid, i + 1, j, currentRegion);
+                }
+                if (grid[i][j - 1] == -1)
+                {
+                    CreateRegion(ref grid, i, j - 1, currentRegion);
+                }
+            }
+            else if (i == 0 && j != 0)
+            {
+                if (grid[i][j + 1] == -1)
+                {
+                    CreateRegion(ref grid, i, j + 1, currentRegion);
+                }
+                if (grid[i + 1][j] == -1)
+                {
+                    CreateRegion(ref grid, i + 1, j, currentRegion);
+                }
+                if (grid[i][j - 1] == -1)
+                {
+                    CreateRegion(ref grid, i, j - 1, currentRegion);
+                }
+            }
+            else if (i == grid.GetLength(0) - 1 && j == 0)
+            {
+                if (grid[i - 1][j] == -1)
+                {
+                    CreateRegion(ref grid, i - 1, j, currentRegion);
+                }
+                if (grid[i][j + 1] == -1)
+                {
+                    CreateRegion(ref grid, i, j + 1, currentRegion);
+                }
+            }
+            else if (i != 0 && j == 0)
+            {
+                if (grid[i - 1][j] == -1)
+                {
+                    CreateRegion(ref grid, i - 1, j, currentRegion);
+                }
+                if (grid[i][j + 1] == -1)
+                {
+                    CreateRegion(ref grid, i, j + 1, currentRegion);
+                }
+                if (grid[i + 1][j] == -1)
+                {
+                    CreateRegion(ref grid, i + 1, j, currentRegion);
+                }
+            }
+            else if (i == grid.GetLength(0) - 1 && j == grid[i].Length - 1)
+            {
+                if (grid[i][j - 1] == -1)
+                {
+                    CreateRegion(ref grid, i, j - 1, currentRegion);
+                }
+                if (grid[i - 1][j] == -1)
+                {
+                    CreateRegion(ref grid, i - 1, j, currentRegion);
+                }
+            }
+            else if (i != 0 && j == grid[i].Length - 1)
+            {
+                if (grid[i - 1][j] == -1)
+                {
+                    CreateRegion(ref grid, i - 1, j, currentRegion);
+                }
+                if (grid[i][j - 1] == -1)
+                {
+                    CreateRegion(ref grid, i, j - 1, currentRegion);
+                }
+                if (grid[i + 1][j] == -1)
+                {
+                    CreateRegion(ref grid, i + 1, j, currentRegion);
+                }
+            }
+            else if (i == grid.GetLength(0) - 1 && j != 0)
+            {
+                if (grid[i][j - 1] == -1)
+                {
+                    CreateRegion(ref grid, i, j - 1, currentRegion);
+                }
+                if (grid[i - 1][j] == -1)
+                {
+                    CreateRegion(ref grid, i - 1, j, currentRegion);
+                }
+                if (grid[i][j + 1] == -1)
+                {
+                    CreateRegion(ref grid, i, j + 1, currentRegion);
+                }
+            }
+            else
+            {
+                if (grid[i - 1][j] == -1)
+                {
+                    CreateRegion(ref grid, i - 1, j, currentRegion);
+                }
+                if (grid[i][j - 1] == -1)
+                {
+                    CreateRegion(ref grid, i, j - 1, currentRegion);
+                }
+                if (grid[i][j + 1] == -1)
+                {
+                    CreateRegion(ref grid, i, j + 1, currentRegion);
+                }
+                if (grid[i + 1][j] == -1)
+                {
+                    CreateRegion(ref grid, i + 1, j, currentRegion);
+                }
+            }
         }
 
         private int[] KnotHash(string input)
