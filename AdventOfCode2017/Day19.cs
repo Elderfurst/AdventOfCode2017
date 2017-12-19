@@ -21,7 +21,7 @@ namespace AdventOfCode2017
             var i = 0;
             var j = startingSpace;
             var finished = false;
-            var steps = 0;
+            var steps = 1;
             while (!finished)
             {
                 steps++;
