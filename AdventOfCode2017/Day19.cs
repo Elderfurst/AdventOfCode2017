@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AdventOfCode2017
 {
@@ -13,11 +10,10 @@ namespace AdventOfCode2017
             .Select(x => x.ToCharArray().Select(y => y.ToString()).ToArray()).ToArray();
         public void Run()
         {
-            PartOne();
-            PartTwo();
+            PartOneAndTwo();
         }
 
-        private void PartOne()
+        private void PartOneAndTwo()
         {
             var direction = "down";
             var letters = "";
@@ -25,24 +21,116 @@ namespace AdventOfCode2017
             var i = 0;
             var j = startingSpace;
             var finished = false;
+            var steps = 0;
             while (!finished)
             {
+                steps++;
                 switch (direction)
                 {
                     case "down":
                         i++;
                         if (_path[i][j] != "|")
                         {
-                            
+                            if (_path[i][j] != "-" && _path[i][j] != "+")
+                            {
+                                letters += _path[i][j];
+                            }
+                            if (_path[i + 1][j] != "|" && _path[i + 1][j] == " " && _path[i + 1][j] != "+")
+                            {
+                                if (_path[i][j - 1] != " ")
+                                {
+                                    direction = "left";
+                                }
+                                else if(_path[i][j + 1] != " ")
+                                {
+                                    direction = "right";
+                                }
+                                else
+                                {
+                                    finished = true;
+                                }
+                            }
+                        }
+                        break;
+                    case "left":
+                        j--;
+                        if (_path[i][j] != "-")
+                        {
+                            if (_path[i][j] != "|" && _path[i][j] != "+")
+                            {
+                                letters += _path[i][j];
+                            }
+                            if (_path[i][j - 1] != "-" && _path[i][j - 1] == " " && _path[i][j - 1] != "+")
+                            {
+                                if (_path[i - 1][j] != " ")
+                                {
+                                    direction = "up";
+                                }
+                                else if (_path[i + 1][j] != " ")
+                                {
+                                    direction = "down";
+                                }
+                                else
+                                {
+                                    finished = true;
+                                }
+                            }
+                        }
+                        break;
+                    case "right":
+                        j++;
+                        if (_path[i][j] != "-")
+                        {
+                            if (_path[i][j] != "|" && _path[i][j] != "+")
+                            {
+                                letters += _path[i][j];
+                            }
+                            if (_path[i][j + 1] != "-" && _path[i][j + 1] == " " && _path[i][j + 1] != "+")
+                            {
+                                if (_path[i - 1][j] != " ")
+                                {
+                                    direction = "up";
+                                }
+                                else if (_path[i + 1][j] != " ")
+                                {
+                                    direction = "down";
+                                }
+                                else
+                                {
+                                    finished = true;
+                                }
+                            }
+                        }
+                        break;
+                    case "up":
+                        i--;
+                        if (_path[i][j] != "|")
+                        {
+                            if (_path[i][j] != "-" && _path[i][j] != "+")
+                            {
+                                letters += _path[i][j];
+                            }
+                            if (_path[i - 1][j] != "|" && _path[i - 1][j] != "+" && _path[i - 1][j] == " ")
+                            {
+                                if (_path[i][j - 1] != " ")
+                                {
+                                    direction = "left";
+                                }
+                                else if (_path[i][j + 1] != " ")
+                                {
+                                    direction = "right";
+                                }
+                                else
+                                {
+                                    finished = true;
+                                }
+                            }
                         }
                         break;
                 }
             }
-        }
-
-        private void PartTwo()
-        {
-            
+            Console.WriteLine(letters);
+            Console.WriteLine(steps);
         }
     }
 }
