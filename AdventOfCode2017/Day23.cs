@@ -101,7 +101,6 @@ namespace AdventOfCode2017
             int b = 0;
             int c = 0;
             int d = 0;
-            int e = 0;
             int f = 0;
             int g = 0;
             int h = 0;
@@ -119,7 +118,6 @@ namespace AdventOfCode2017
             {
                 f = 1;
                 d = 2;
-                e = 2;
 
                 for (d = 2; d < b; d++)
                 {
